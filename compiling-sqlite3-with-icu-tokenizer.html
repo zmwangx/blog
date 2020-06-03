@@ -23,73 +23,73 @@
 </div>
 <p>Today I decided to use SQLite full-text search to power the search of Chinese content in a side project (a Flask and SQLite-powered website). Unfortunately, the <code>simple</code>, <code>porter</code> and <code>unicode61</code> tokenizers are basically useless for Chinese text, and <code>libsqlite3-dev</code> as packaged by Debian does not come with the <code>icu</code> tokenizer. So I had to compile SQLite3 with ICU myself.</p>
 <p>The process is actually simple enough. Note the compile options used by the Debian package are as follows:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1">$ <span class="ex">sqlite3</span> <span class="op">&lt;&lt;&lt;</span><span class="st">'PRAGMA compile_options;'</span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="va">COMPILER=</span>gcc-7.3.0</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="ex">ENABLE_COLUMN_METADATA</span></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="ex">ENABLE_DBSTAT_VTAB</span></a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="ex">ENABLE_FTS3</span></a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="ex">ENABLE_FTS3_PARENTHESIS</span></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="ex">ENABLE_FTS3_TOKENIZER</span></a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="ex">ENABLE_FTS4</span></a>
-<a class="sourceLine" id="cb1-9" title="9"><span class="ex">ENABLE_FTS5</span></a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="ex">ENABLE_JSON1</span></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="ex">ENABLE_LOAD_EXTENSION</span></a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="ex">ENABLE_PREUPDATE_HOOK</span></a>
-<a class="sourceLine" id="cb1-13" title="13"><span class="ex">ENABLE_RTREE</span></a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="ex">ENABLE_SESSION</span></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="ex">ENABLE_STMTVTAB</span></a>
-<a class="sourceLine" id="cb1-16" title="16"><span class="ex">ENABLE_UNKNOWN_SQL_FUNCTION</span></a>
-<a class="sourceLine" id="cb1-17" title="17"><span class="ex">ENABLE_UNLOCK_NOTIFY</span></a>
-<a class="sourceLine" id="cb1-18" title="18"><span class="ex">ENABLE_UPDATE_DELETE_LIMIT</span></a>
-<a class="sourceLine" id="cb1-19" title="19"><span class="ex">HAVE_ISNAN</span></a>
-<a class="sourceLine" id="cb1-20" title="20"><span class="ex">LIKE_DOESNT_MATCH_BLOBS</span></a>
-<a class="sourceLine" id="cb1-21" title="21"><span class="va">MAX_SCHEMA_RETRY=</span>25</a>
-<a class="sourceLine" id="cb1-22" title="22"><span class="va">MAX_VARIABLE_NUMBER=</span>250000</a>
-<a class="sourceLine" id="cb1-23" title="23"><span class="ex">OMIT_LOOKASIDE</span></a>
-<a class="sourceLine" id="cb1-24" title="24"><span class="ex">SECURE_DELETE</span></a>
-<a class="sourceLine" id="cb1-25" title="25"><span class="ex">SOUNDEX</span></a>
-<a class="sourceLine" id="cb1-26" title="26"><span class="va">THREADSAFE=</span>1</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a>$ <span class="ex">sqlite3</span> <span class="op">&lt;&lt;&lt;</span><span class="st">'PRAGMA compile_options;'</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="va">COMPILER=</span>gcc-7.3.0</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="ex">ENABLE_COLUMN_METADATA</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="ex">ENABLE_DBSTAT_VTAB</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="ex">ENABLE_FTS3</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="ex">ENABLE_FTS3_PARENTHESIS</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="ex">ENABLE_FTS3_TOKENIZER</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="ex">ENABLE_FTS4</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="ex">ENABLE_FTS5</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="ex">ENABLE_JSON1</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="ex">ENABLE_LOAD_EXTENSION</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="ex">ENABLE_PREUPDATE_HOOK</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="ex">ENABLE_RTREE</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="ex">ENABLE_SESSION</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="ex">ENABLE_STMTVTAB</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="ex">ENABLE_UNKNOWN_SQL_FUNCTION</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="ex">ENABLE_UNLOCK_NOTIFY</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="ex">ENABLE_UPDATE_DELETE_LIMIT</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="ex">HAVE_ISNAN</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="ex">LIKE_DOESNT_MATCH_BLOBS</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="va">MAX_SCHEMA_RETRY=</span>25</span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="va">MAX_VARIABLE_NUMBER=</span>250000</span>
+<span id="cb1-23"><a href="#cb1-23"></a><span class="ex">OMIT_LOOKASIDE</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a><span class="ex">SECURE_DELETE</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a><span class="ex">SOUNDEX</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a><span class="va">THREADSAFE=</span>1</span></code></pre></div>
 <p>One could also obtain the list of options from <code>debian/rules</code> in the source package. I was going to overwrite the Debian package and didn’t want to screw up the myriad SQLite3 reverse dependencies, so I was careful to preserve these options. Of course, the option we want to add is <code>ENABLE_ICU</code>.</p>
 <p>To prepare for the dependencies, we simply need</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1">$ <span class="ex">apt</span> build-dep -y libsqlite3-dev</a>
-<a class="sourceLine" id="cb2-2" title="2">$ <span class="ex">apt</span> install -y libicu-dev pkg-config</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>$ <span class="ex">apt</span> build-dep -y libsqlite3-dev</span>
+<span id="cb2-2"><a href="#cb2-2"></a>$ <span class="ex">apt</span> install -y libicu-dev pkg-config</span></code></pre></div>
 <p>Next we download SQLite3 source tarball from <a href="https://www.sqlite.org/download.html">the official download page</a>, unpack and configure as follows:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="bu">export</span> <span class="va">CFLAGS=</span><span class="st">"\</span></a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="st">-O2 -fno-strict-aliasing \</span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="st">-DSQLITE_SECURE_DELETE -DSQLITE_ENABLE_COLUMN_METADATA \</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="st">-DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS \</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="st">-DSQLITE_ENABLE_RTREE=1 -DSQLITE_SOUNDEX=1 \</span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="st">-DSQLITE_ENABLE_UNLOCK_NOTIFY \</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="st">-DSQLITE_OMIT_LOOKASIDE=1 -DSQLITE_ENABLE_DBSTAT_VTAB \</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="st">-DSQLITE_ENABLE_UPDATE_DELETE_LIMIT=1 \</span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="st">-DSQLITE_ENABLE_LOAD_EXTENSION \</span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="st">-DSQLITE_ENABLE_JSON1 \</span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="st">-DSQLITE_LIKE_DOESNT_MATCH_BLOBS \</span></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="st">-DSQLITE_THREADSAFE=1 \</span></a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="st">-DSQLITE_ENABLE_FTS3_TOKENIZER=1 \</span></a>
-<a class="sourceLine" id="cb3-14" title="14"><span class="st">-DSQLITE_MAX_SCHEMA_RETRY=25 \</span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="st">-DSQLITE_ENABLE_PREUPDATE_HOOK \</span></a>
-<a class="sourceLine" id="cb3-16" title="16"><span class="st">-DSQLITE_ENABLE_SESSION \</span></a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="st">-DSQLITE_ENABLE_STMTVTAB \</span></a>
-<a class="sourceLine" id="cb3-18" title="18"><span class="st">-DSQLITE_MAX_VARIABLE_NUMBER=250000 \</span></a>
-<a class="sourceLine" id="cb3-19" title="19"><span class="st">-DSQLITE_ENABLE_ICU"</span></a>
-<a class="sourceLine" id="cb3-20" title="20"><span class="bu">export</span> <span class="va">LDFLAGS=</span><span class="st">"</span><span class="va">$(</span><span class="ex">pkg-config</span> --libs icu-i18n<span class="va">)</span><span class="st">"</span></a>
-<a class="sourceLine" id="cb3-21" title="21"><span class="ex">./configure</span> --prefix=/usr --libdir=/usr/lib/x86_64-linux-gnu</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="bu">export</span> <span class="va">CFLAGS=</span><span class="st">"\</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="st">-O2 -fno-strict-aliasing \</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="st">-DSQLITE_SECURE_DELETE -DSQLITE_ENABLE_COLUMN_METADATA \</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="st">-DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS \</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="st">-DSQLITE_ENABLE_RTREE=1 -DSQLITE_SOUNDEX=1 \</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="st">-DSQLITE_ENABLE_UNLOCK_NOTIFY \</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="st">-DSQLITE_OMIT_LOOKASIDE=1 -DSQLITE_ENABLE_DBSTAT_VTAB \</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="st">-DSQLITE_ENABLE_UPDATE_DELETE_LIMIT=1 \</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="st">-DSQLITE_ENABLE_LOAD_EXTENSION \</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="st">-DSQLITE_ENABLE_JSON1 \</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="st">-DSQLITE_LIKE_DOESNT_MATCH_BLOBS \</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="st">-DSQLITE_THREADSAFE=1 \</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="st">-DSQLITE_ENABLE_FTS3_TOKENIZER=1 \</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="st">-DSQLITE_MAX_SCHEMA_RETRY=25 \</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="st">-DSQLITE_ENABLE_PREUPDATE_HOOK \</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="st">-DSQLITE_ENABLE_SESSION \</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="st">-DSQLITE_ENABLE_STMTVTAB \</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="st">-DSQLITE_MAX_VARIABLE_NUMBER=250000 \</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="st">-DSQLITE_ENABLE_ICU"</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="bu">export</span> <span class="va">LDFLAGS=</span><span class="st">"</span><span class="va">$(</span><span class="ex">pkg-config</span> --libs icu-i18n<span class="va">)</span><span class="st">"</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="ex">./configure</span> --prefix=/usr --libdir=/usr/lib/x86_64-linux-gnu</span></code></pre></div>
 <p>Again, this build is configured to overwrite the Debian package; use a different <code>--prefix</code> (as well as <code>--libdir</code>) to avoid that. What follows is the standard <code>make</code> and <code>make install</code>.</p>
 <p>The moment of truth:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb4-1" title="1">$ sqlite3 <span class="op">/</span>tmp<span class="op">/</span>test.db</a>
-<a class="sourceLine" id="cb4-2" title="2">SQLite version <span class="dv">3</span>.<span class="fl">26.0</span> <span class="dv">2018</span><span class="op">-</span><span class="dv">12</span><span class="op">-</span><span class="dv">01</span> <span class="dv">12</span><span class="ch">:34:55</span></a>
-<a class="sourceLine" id="cb4-3" title="3">Enter <span class="ot">".help"</span> <span class="cf">for</span> <span class="kw">usage</span> hints.</a>
-<a class="sourceLine" id="cb4-4" title="4">sqlite<span class="op">&gt;</span> <span class="kw">CREATE</span> VIRTUAL <span class="kw">TABLE</span> text <span class="kw">USING</span> fts4(tokenize<span class="op">=</span>icu zh_CN);</a>
-<a class="sourceLine" id="cb4-5" title="5">sqlite<span class="op">&gt;</span> <span class="kw">INSERT</span> <span class="kw">INTO</span> text <span class="kw">VALUES</span> (<span class="st">'汉语，又称中文、华语、唐话'</span>), (<span class="st">'汉字是汉语的文字书写系统'</span>);</a>
-<a class="sourceLine" id="cb4-6" title="6">sqlite<span class="op">&gt;</span> <span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> text <span class="kw">WHERE</span> text MATCH <span class="st">'汉语'</span>;</a>
-<a class="sourceLine" id="cb4-7" title="7">汉语，又称中文、华语、唐话</a>
-<a class="sourceLine" id="cb4-8" title="8">汉字是汉语的文字书写系统</a>
-<a class="sourceLine" id="cb4-9" title="9">sqlite<span class="op">&gt;</span> <span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> text <span class="kw">WHERE</span> text MATCH <span class="st">'文字'</span>;</a>
-<a class="sourceLine" id="cb4-10" title="10">汉字是汉语的文字书写系统</a>
-<a class="sourceLine" id="cb4-11" title="11">sqlite<span class="op">&gt;</span> .exit</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1"></a>$ sqlite3 <span class="op">/</span>tmp<span class="op">/</span>test.db</span>
+<span id="cb4-2"><a href="#cb4-2"></a>SQLite version <span class="dv">3</span>.<span class="fl">26.0</span> <span class="dv">2018</span><span class="op">-</span><span class="dv">12</span><span class="op">-</span><span class="dv">01</span> <span class="dv">12</span><span class="ch">:34:55</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>Enter <span class="ot">".help"</span> <span class="cf">for</span> <span class="kw">usage</span> hints.</span>
+<span id="cb4-4"><a href="#cb4-4"></a>sqlite<span class="op">&gt;</span> <span class="kw">CREATE</span> VIRTUAL <span class="kw">TABLE</span> text <span class="kw">USING</span> fts4(tokenize<span class="op">=</span>icu zh_CN);</span>
+<span id="cb4-5"><a href="#cb4-5"></a>sqlite<span class="op">&gt;</span> <span class="kw">INSERT</span> <span class="kw">INTO</span> text <span class="kw">VALUES</span> (<span class="st">'汉语，又称中文、华语、唐话'</span>), (<span class="st">'汉字是汉语的文字书写系统'</span>);</span>
+<span id="cb4-6"><a href="#cb4-6"></a>sqlite<span class="op">&gt;</span> <span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> text <span class="kw">WHERE</span> text MATCH <span class="st">'汉语'</span>;</span>
+<span id="cb4-7"><a href="#cb4-7"></a>汉语，又称中文、华语、唐话</span>
+<span id="cb4-8"><a href="#cb4-8"></a>汉字是汉语的文字书写系统</span>
+<span id="cb4-9"><a href="#cb4-9"></a>sqlite<span class="op">&gt;</span> <span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> text <span class="kw">WHERE</span> text MATCH <span class="st">'文字'</span>;</span>
+<span id="cb4-10"><a href="#cb4-10"></a>汉字是汉语的文字书写系统</span>
+<span id="cb4-11"><a href="#cb4-11"></a>sqlite<span class="op">&gt;</span> .exit</span></code></pre></div>
 <p>On macOS, SQLite3 with ICU tokenizer support can be easily<label class="margin-toggle sidenote-number" for="homebrew-easy"></label><input class="margin-toggle" id="homebrew-easy" type="checkbox"/><span class="sidenote">Guess I should say it used to be easy, until options are ruined by <a href="https://github.com/Homebrew/homebrew-core/issues/31510">politics</a>.</span> built with Homebrew; see my PR <a href="https://github.com/Homebrew/homebrew-core/pull/35674">Homebrew/homebrew-core#35674</a>. The command should be</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1">$ <span class="ex">brew</span> install sqlite --with-icu4c --with-fts</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a>$ <span class="ex">brew</span> install sqlite --with-icu4c --with-fts</span></code></pre></div>
 </section>
 </article>
 
