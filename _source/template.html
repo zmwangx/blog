@@ -10,8 +10,17 @@
 </head>
 <body>
 <article>
+$if(title-html)$
+<h1>$title-html$</h1>
+$else$
 <h1>$title$</h1>
-<p class="subtitle">Zhiming Wang</p>
+$endif$
+$if(subtitle-html)$
+<p class="subtitle">$subtitle-html$</p>
+$elseif(subtitle)$
+<p class="subtitle">$subtitle$</p>
+$endif$
+<p class="subtitle">$author-meta$</p>
 <p class="subtitle">$date$</p>
 <section>
 $body$
