@@ -306,6 +306,12 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 
+/* Navigation */
+nav { position: absolute;
+      top: 20px;
+      left: 20px; }
+nav a:link { background: none; }
+
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
   body { background-color: #2c2c2e;
