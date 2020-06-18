@@ -117,7 +117,6 @@ RUN apt-get update \
     libtool \
     make \
     pkg-config \
-    redis-server \
     && mkdir ../sqlite3 && cd ../sqlite3 \
     && curl -O https://www.sqlite.org/2020/sqlite-autoconf-${SQLITE_RELEASE}.tar.gz \
     && tar xf sqlite-autoconf-${SQLITE_RELEASE}.tar.gz \
