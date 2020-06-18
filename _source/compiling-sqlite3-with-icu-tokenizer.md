@@ -104,7 +104,7 @@ $ brew install sqlite --with-icu4c --with-fts
 
 ---
 
-*Update (2020-06-18)*: Here's a snippet you can drop into your `Dockerfile`:
+*Update (2020-06-18)*: Here's a snippet you can drop into your Debian-based `Dockerfile`:
 
 ```dockerfile
 ARG SQLITE_RELEASE=3320100

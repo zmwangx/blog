@@ -91,7 +91,7 @@
 <p>On macOS, SQLite3 with ICU tokenizer support can be easily<label class="margin-toggle sidenote-number" for="homebrew-easy"></label><input class="margin-toggle" id="homebrew-easy" type="checkbox"/><span class="sidenote">Guess I should say it used to be easy, until options are ruined by <a href="https://github.com/Homebrew/homebrew-core/issues/31510">politics</a>.</span> built with Homebrew; see my PR <a href="https://github.com/Homebrew/homebrew-core/pull/35674">Homebrew/homebrew-core#35674</a>. The command should be</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a>$ <span class="ex">brew</span> install sqlite --with-icu4c --with-fts</span></code></pre></div>
 <hr/>
-<p><em>Update (2020-06-18)</em>: Here’s a snippet you can drop into your <code>Dockerfile</code>:</p>
+<p><em>Update (2020-06-18)</em>: Here’s a snippet you can drop into your Debian-based <code>Dockerfile</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">ARG</span> SQLITE_RELEASE=3320100</span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="kw">RUN</span> apt-get update \</span>
 <span id="cb6-3"><a href="#cb6-3"></a>    &amp;&amp; apt-get install -y --no-install-recommends \</span>
