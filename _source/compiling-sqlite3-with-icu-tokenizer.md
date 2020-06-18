@@ -101,3 +101,57 @@ On macOS, SQLite3 with ICU tokenizer support can be easily<sidenote id="homebrew
 ```sh
 $ brew install sqlite --with-icu4c --with-fts
 ```
+
+---
+
+*Update (2020-06-18)*: Here's a snippet you can drop into your `Dockerfile`:
+
+```dockerfile
+ARG SQLITE_RELEASE=3320100
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+    autoconf \
+    automake \
+    curl \
+    libicu-dev \
+    libtool \
+    make \
+    pkg-config \
+    redis-server \
+    && mkdir ../sqlite3 && cd ../sqlite3 \
+    && curl -O https://www.sqlite.org/2020/sqlite-autoconf-${SQLITE_RELEASE}.tar.gz \
+    && tar xf sqlite-autoconf-${SQLITE_RELEASE}.tar.gz \
+    && cd sqlite-autoconf-${SQLITE_RELEASE} \
+    && CFLAGS="\
+    -O2 -fno-strict-aliasing \
+    -DSQLITE_SECURE_DELETE -DSQLITE_ENABLE_COLUMN_METADATA \
+    -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS \
+    -DSQLITE_ENABLE_RTREE=1 -DSQLITE_SOUNDEX=1 \
+    -DSQLITE_ENABLE_UNLOCK_NOTIFY \
+    -DSQLITE_OMIT_LOOKASIDE=1 -DSQLITE_ENABLE_DBSTAT_VTAB \
+    -DSQLITE_ENABLE_UPDATE_DELETE_LIMIT=1 \
+    -DSQLITE_ENABLE_LOAD_EXTENSION \
+    -DSQLITE_ENABLE_JSON1 \
+    -DSQLITE_LIKE_DOESNT_MATCH_BLOBS \
+    -DSQLITE_THREADSAFE=1 \
+    -DSQLITE_ENABLE_FTS3_TOKENIZER=1 \
+    -DSQLITE_MAX_SCHEMA_RETRY=25 \
+    -DSQLITE_ENABLE_PREUPDATE_HOOK \
+    -DSQLITE_ENABLE_SESSION \
+    -DSQLITE_ENABLE_STMTVTAB \
+    -DSQLITE_MAX_VARIABLE_NUMBER=250000 \
+    -DSQLITE_ENABLE_ICU" \
+    LDFLAGS="$(pkg-config --libs icu-i18n)" \
+    ./configure --prefix=/usr --libdir=/usr/lib/x86_64-linux-gnu \
+    && make && make install \
+    && apt-get purge -y --auto-remove \
+    autoconf \
+    automake \
+    curl \
+    libtool \
+    make \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/* \
+    && cd /usr/src/app \
+    && rm -rf ../sqlite3
+```
