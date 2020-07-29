@@ -224,6 +224,10 @@ pre { font-size: 0.9rem;
 
 pre.fullwidth { width: 90%; }
 
+li pre { width: auto; }
+
+li pre.fullwidth { width: auto; }
+
 .fullwidth { max-width: 90%;
              clear:both; }
 
