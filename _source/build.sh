@@ -11,6 +11,9 @@ EOF
 here=$0:A:h
 root=$here:h
 template=$here/template.html
+# TODO: additional syntax definition can be dropped once the next version of
+# Pandoc (currently 2.10.1) hits.
+# https://github.com/jgm/skylighting/pull/105
 syntax_additions=(--syntax-definition=$here/syntax/toml.xml)
 filter=$here/filter.py
 
